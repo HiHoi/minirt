@@ -6,7 +6,7 @@
 #    By: hoslim <hoslim@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/02/22 20:01:46 by hoslim            #+#    #+#              #
-#    Updated: 2023/03/02 21:20:12 by hoslim           ###   ########.fr        #
+#    Updated: 2023/03/04 17:57:25 by hoslim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,7 +39,7 @@ $(NAME) : $(OBJS)
 	install_name_tool -change libmlx.dylib mlx/libmlx.dylib $(NAME)
 
 clean :
-	rm -rf *.o
+	rm -rf ./*.o
 
 fclean : clean
 	rm -rf $(NAME)
