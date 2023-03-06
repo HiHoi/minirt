@@ -13,6 +13,8 @@ typedef struct s_canvas t_canvas;
 typedef struct s_hit_record	t_hit_record;
 
 typedef struct s_sphere	t_sphere;
+typedef	struct s_cylinder t_cylinder;
+typedef struct s_plane t_plane;
 typedef	struct s_object	t_object;
 
 typedef	struct s_light t_light;
@@ -25,6 +27,8 @@ typedef	struct s_scene t_scene;
 typedef int	t_object_type;
 # define SP 0
 # define LIGHT_POINT 1
+# define CYLINDER 2
+# define PLANE 3
 
 # define EPSILON 1e-6
 # define LUMEN 3
@@ -84,7 +88,7 @@ struct s_hit_record
 	double		tmax;
 	double		t;
 	t_bool		front_face;
-	t_color3		albedo;
+	t_color3	albedo;
 };
 
 struct s_scene
@@ -103,6 +107,20 @@ struct s_sphere
 	t_point3	center;
 	double		radius;
 	double		radius2;
+};
+
+struct s_cylinder
+{
+	t_point3	center;
+	t_vec3		dir;
+	double		radius;
+	double		height;
+};
+
+struct s_plane
+{
+	t_point3	center;
+	t_vec3		dir;
 };
 
 struct s_light

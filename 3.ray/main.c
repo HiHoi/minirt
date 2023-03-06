@@ -32,15 +32,22 @@ t_scene	*scene_init(void)
 
 	if (!(scene = malloc(sizeof(t_scene))))
 		return (NULL);
-	scene->canvas = canvas(400, 300);
-	scene->camera = camera(&scene->canvas, point3(0, 0, 0));
-	world = object(SP, sphere(point3(-2, 0, -5), 2), color3(0.5, 0, 0));
-	oadd(&world, object(SP, sphere(point3(0, -1010, 0), 995), color3(1, 1, 1)));
-	oadd(&world, object(SP, sphere(point3(2, 0, -5), 2), color3(0, 0.5, 0)));
+	scene->canvas = canvas(1200, 800);
+	scene->camera = camera(&scene->canvas, point3(0, 0, 5));
+	world = object(PLANE, plane(point3(0, -7, 0), vec3(0, 10, 0)), color3(0.4, 0.6, 0.3));
+	//바닥
+	// world = object(SP, sphere(point3(0, -1010, 0), 995), color3(1, 1, 1));
+	//면
+	//원기둥
+	oadd(&world, object(CYLINDER, cylinder(point3(2, 0, -3), vec3(0, 1, -0.5), 1, 3), color3(0.5, 0, 0)));
+	//구 1
+	oadd(&world, object(SP, sphere(point3(-2, 0, -5), 2), color3(0.6, 0.3, 0)));
+	//구 2
+	// oadd(&world, object(SP, sphere(point3(2, 0, -5), 2), color3(0, 0.5, 0)));
 	scene->world = world;
-	lights = object(LIGHT_POINT, light_point(point3(0, 5, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0));
+	lights = object(LIGHT_POINT, light_point(point3(0, 20, 0), color3(1, 1, 1), 0.5), color3(0, 0, 0));
 	scene->light = lights;
-	ka = 0.2;
+	ka = 0.1;
 	scene->ambient = vmult(color3(1, 1, 1), ka);
 	return (scene);
 }
@@ -58,7 +65,7 @@ int	main(void)
 
 	game = malloc(sizeof(t_game));
 	game->mlx = mlx_init();
-	game->win = mlx_new_window(game->mlx, 400, 300, "Minirt");
+	game->win = mlx_new_window(game->mlx, 1200, 800, "Minirt");
 	scene = scene_init();
 	j = scene->canvas.height - 1;
 	while (j >= 0)

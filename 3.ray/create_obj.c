@@ -51,6 +51,32 @@ t_sphere    *sphere(t_point3 center, double radius)
     return (sp);
 }
 
+t_plane     *plane(t_point3 center, t_vec3 dir)
+{
+    t_plane *pl;
+
+    pl = malloc(sizeof(t_plane));
+    if (pl == NULL)
+        return (NULL);
+    pl->center = center;
+    pl->dir = dir;
+    return (pl);
+}
+
+t_cylinder  *cylinder(t_point3 center, t_vec3 dir, double radius, double height)
+{
+    t_cylinder      *cyl;
+
+    cyl = malloc(sizeof(t_cylinder));
+    if (cyl == NULL)
+        return (NULL);
+    cyl->center = center;
+    cyl->height = height;
+    cyl->radius = radius;
+    cyl->dir = dir;
+    return (cyl);
+}
+
 t_light *light_point(t_point3 light_origin, t_color3 light_color, double bright_ratio)
 {
     t_light *light;

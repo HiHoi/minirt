@@ -38,7 +38,6 @@ t_ray   ray_primary(t_camera *cam, double u, double v)
 t_color3    ray_color(t_scene *scene)
 {
 	double          t;
-	// t_vec3          n;
 
 	scene->rec = record_init();
 	if (hit(scene->world, &scene->ray, &scene->rec))
@@ -75,6 +74,7 @@ t_color3    point_light_get(t_scene *scene, t_light *light)
 	light_ray = ray(vplus(scene->rec.p, vmult(scene->rec.normal, EPSILON)), light_dir);
 	if (in_shadow(scene->world, light_ray, light_len))
 		return (color3(0, 0, 0));
+	light_dir = vunit(light_dir);
 	kd = fmax(vdot(scene->rec.normal, light_dir), 0.0);
 	diffuse = vmult(light->light_color, kd);
 	view_dir = vunit(vmult(scene->ray.dir, -1));
