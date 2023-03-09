@@ -159,3 +159,13 @@ t_vec3  vmin(t_vec3 vec1, t_vec3 vec2)
 		vec1.z = vec2.z;
 	return (vec1);
 }
+
+double	random_double_void(void)
+{
+	return (rand() / (RAND_MAX + 1.0));
+}
+
+double	random_double(double min, double max)
+{
+	return (min + (max - min) * random_double_void());
+}

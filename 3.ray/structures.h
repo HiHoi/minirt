@@ -20,6 +20,7 @@ typedef	struct s_object	t_object;
 typedef	struct s_light t_light;
 
 typedef	struct s_scene t_scene;
+typedef struct s_material	t_material;
 
 # define FALSE 0
 # define TRUE 1
@@ -98,6 +99,7 @@ struct s_scene
 	t_object		*world;
 	t_object		*light;
 	t_color3		ambient;
+	double			ambient_ratio;
 	t_ray			ray;
 	t_hit_record	rec;
 };

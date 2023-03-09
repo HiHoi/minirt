@@ -35,16 +35,88 @@ t_ray   ray_primary(t_camera *cam, double u, double v)
 	return (ray);
 }
 
-t_color3    ray_color(t_scene *scene)
+t_vec3	random_vecter_void(void)
+{
+	return (vec3(random_double_void(), random_double_void(), random_double_void()));
+}
+
+t_vec3	random_vecter(double min, double max)
+{
+	return (vec3(random_double(min, max), random_double(min, max), random_double(min, max)));
+}
+
+t_vec3	random_in_unit_sphere(void)
+{
+	t_vec3	p;
+
+	while (TRUE)
+	{
+		p = random_vecter(-1, 1);
+		if (vlength2(p) >= 1)
+			continue ;
+		else
+			break ;
+	}
+	return (p);
+}
+
+/*
+color ray_color(const ray& r, const hittable& world) {
+  hit_record rec;
+
+  if (world.hit(r, 0, infinity, rec)) {
+    point3 target = rec.p + rec.normal + random_in_unit_sphere();
+    return 0.5 * ray_color(ray(rec.p, target - rec.p), world);
+  }
+
+  vec3 unit_direction = unit_vector(r.direction());
+  auto t = 0.5 * (unit_direction.y() + 1.0);
+  return (1.0 - t) * color(1.0, 1.0, 1.0) + t * color(0.5, 0.7, 1.0);
+}
+*/
+
+t_vec3	random_unit_vector(void)
+{
+	double	a;
+	double	z;
+	double	r;
+
+	a = random_double(0, 2 * 3.14);
+	z = random_double(-1, 1);
+	r = sqrt(1 - z * z);
+	return (vec3(r * cos(a), r * sin(a), z));
+}
+
+t_vec3	random_in_hemisphere(t_vec3 normal)
+{
+	t_vec3	in_hemi = random_in_unit_sphere();
+
+	if (vdot(in_hemi, normal) > 0.0)
+		return (in_hemi);
+	else
+		return(vmult(in_hemi, -1.0));
+}
+
+t_color3    ray_color(t_scene *scene, int depth)
 {
 	double          t;
+	t_vec3			unit_dir;
+	// t_point3		target;
 
 	scene->rec = record_init();
+	if (depth <= 0)
+		return (color3(0, 0, 0));
 	if (hit(scene->world, &scene->ray, &scene->rec))
+	{
+		// target = vplus(scene->rec.p, random_in_hemisphere(scene->rec.normal));
+		// scene->ray = ray(scene->rec.p, vminus(target, scene->rec.p));
+		// return (vmult(ray_color(scene, depth - 1), 0.5));
 		return (phong_lighting(scene));
+	}
 	else
 	{
-		t = 0.5 * (scene->ray.dir.y + 1.0);
+		unit_dir = vunit(scene->ray.dir);
+		t = 0.5 * (unit_dir.y + 1.0);
 		return (vplus(vmult(color3(1, 1, 1), 1.0 - t), vmult(color3(0.5, 0.7, 1.0), t)));
 	}
 }

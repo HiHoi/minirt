@@ -24,4 +24,8 @@ t_vec3      vcross(t_vec3 vec, t_vec3 vec2);
 t_vec3      vunit(t_vec3 vec);
 t_vec3      vmin(t_vec3 vec1, t_vec3 vec2);
 
+double	    random_double_void(void);
+double  	random_double(double min, double max);
+
+
 #endif
